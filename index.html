@@ -1,0 +1,41 @@
+<html>
+
+<head>
+  <title>Google Recaptcha v2 demo</title>
+</head>
+
+<body>
+
+  <h1>Google Recaptcha v2 demo</h1>
+  <div class="g-recaptcha" data-callback="recaptchaCallback" data-sitekey="SITE_KEY">
+  </div>
+
+  <script src='https://www.recaptcha.net/recaptcha/api.js'></script>
+  <script>
+    function recaptchaCallback(response) {
+      const data = { "g-recaptcha-response": response };
+      fetch('/verify', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then(response => {
+          if (response.status === 200) {
+            alert('Success');
+          } else if (response.status === 400) {
+            alert('Error:', response.json().error);
+          } else {
+            alert('Error:', response.json().error);
+          }
+        })
+        .catch((error) => {
+          alert('Error:', error);
+        });
+    }
+  </script>
+
+</body>
+
+</html>
